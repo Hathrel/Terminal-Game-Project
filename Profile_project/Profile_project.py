@@ -72,7 +72,7 @@ class Human:
       print("{defender} prepares for an attack...".format(defender = self.name))
     
     elif self.conscious and self.is_defending:
-      print("{defender} can't be any more prepared for an attack!".format(defender = self.name)
+      print("{defender} can't be any more prepared for an attack!".format(defender = self.name))
 
 class Weapon:
     def __init__(self, make):
