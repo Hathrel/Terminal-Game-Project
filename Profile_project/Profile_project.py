@@ -1,40 +1,34 @@
-import random as r
+from utils import roll_int
+from debugging import Debugger
 
-#I'm lazy and don't want to type r.randinit every time I want to roll a number
-def roll(num1, num2):
-    roll = r.randint(num1, num2)
-    return roll
-debugging = False
+Debugger.debugging = True
 
 class Human:
   def __init__(self, name, weapon, player=False):
     self.name = name
-    #Randomize stats to make each fight truly unique. You might be a buff god made of iron, or a weak worm made of paper. Same goes for the NPC
-    self.strength = roll(1, 10)
-    self.defense = roll(1, 10)
+
+    self.strength = roll_int(1, 10)
+    self.defense = roll_int(1, 10)
     self.health = 100
     self.weapon = weapon
     self.player = player
     self.conscious = True
     self.is_defending = False
-  def __repr__(self):
-      return "A Human"
-  
-  #This took an absurd amount of my time, both in the original script and in this one
-  def attack(self, target=None):
+
+  def attack(self, target:None=None):
         if self.conscious and target.conscious:
-            attack_roll = roll(1, 20) + self.weapon.attack
-            defense_roll = roll(1, 20)
+            attack_roll = roll_int(1, 20) + self.weapon.attack
+            defense_roll = roll_int(1, 20)
             if debugging:
                 print("DEBUG: Attack was {attack} Defense was {defense}".format(attack = attack_roll, defense = defense_roll))
             if defense_roll + target.defense >= attack_roll + self.strength:
                 print("{attacker}'s attack missed!".format(attacker=self.name))
             elif target.is_defending:
-                block_chance = roll(1, 100) + target.defense
+                block_chance = roll_int(1, 100) + target.defense
                 if block_chance >= 90:
                     print("{defender} blocked the attack!".format(defender=target.name))
                 else:
-                    damage_roll = roll(1, 10) + self.weapon.damage - target.defense
+                    damage_roll = roll_int(1, 10) + self.weapon.damage - target.defense
                     if damage_roll < 0:
                         damage_roll = 0
                     print(
@@ -45,10 +39,8 @@ class Human:
                     target.health -= damage_roll
                 target.is_defending = False
             else:
-                damage_roll = roll(1, 10) + self.weapon.damage
-                #Go ahead and create a roll for the knockout check
-                knockout_roll = roll(1, 100)
-                #Check if you or the NPC has a mace, if so, here's the chance to crush their skull
+                damage_roll = roll_int(1, 10) + self.weapon.damage
+                knockout_roll = roll_int(1, 100)
                 if self.weapon.make == "Mace" and knockout_roll >= 95:
                     target.conscious = False
                     print(
@@ -74,43 +66,16 @@ class Human:
     elif self.conscious and self.is_defending:
       print("{defender} can't be any more prepared for an attack!".format(defender = self.name))
 
-class Weapon:
-    def __init__(self, make):
-        self.make = make
-        #kinda proud of this. I didn't do it alone, it was built on a suggestion by ChatGPT, but the values and use are mine
-        self.stats = {
-            "Longsword": {"damage": 5, "attack": 10},
-            "Mace": {"damage": 3, "attack": 3},
-            "Dagger": {"damage": 2, "attack": 15},
-            "Greatsword": {"damage": 15, "attack": 5}
-        }
+weapon_rack = [Longsword, Mace, Dagger, Greatsword]
 
-        if self.make in self.stats:
-            self.damage = self.stats[self.make]["damage"]
-            self.attack = self.stats[self.make]["attack"]
-        else:
-            self.damage = 0
-            self.attack = 0
-
-    def __repr__(self):
-        return self.make
-
-longsword = Weapon("Longsword")
-mace = Weapon("Mace")
-dagger = Weapon("Dagger")
-greatsword = Weapon("Greatsword")
-weapon_rack = [longsword, mace, dagger, greatsword]
-
-#Nailed this one on the first try. I think I'm most proud of this function, out of this entire script, small, but it was a victory for me
 def assign_name():
     first_names = ["Nicostratus", "Sostratus", "Patricius", "Leonius", "Beringarius", "Nerva", "Saul", "Demetrius", "Viggo", "Philandrus", "Philocrates", "Ladislaus", "Amatus", "Fidelis"]
     last_names = ["Procillus", "Cossus", "Clineas", "Blasio", "Laevinus", "Regillensis", "Pictor", "Libo", "Spinther", "Rutilus", "Mocilla", "Sacerdos", "Sisenna", "Crus", "Potitus"]
-    name = first_names[roll(0, len(first_names) - 1)] + " " + last_names[roll(0, len(last_names) - 1)]
+    name = first_names[roll_int(0, len(first_names) - 1)] + " " + last_names[roll_int(0, len(last_names) - 1)]
     return name
 
-npc = Human(assign_name(), weapon = weapon_rack[roll(0, len(weapon_rack) - 1)])
+npc = Human(assign_name(), weapon = weapon_rack[roll_int(0, len(weapon_rack) - 1)])
 
-#No matter how much I stripped it down, I couldn't help but put in a little bit of fanfare
 print("""
 
 You enter the arena to the roar of the crowd. A man in the emperor's box with a booming voice shouts, "Welcome, one and all, back to The Arena!"
@@ -190,7 +155,7 @@ while player.conscious and npc.conscious:
 
     #NPC Logic. Not smart enough to be called AI. Ensures you get a unique fight every game load.
     while npc_turn == True and player_turn == False:
-        action_choice = roll(1,100)
+        action_choice = roll_int(1,100)
         if debugging == True:
             print("DEBUG: Action Choice roll was {roll}".format(roll = action_choice))
         if action_choice >= 80:
@@ -204,7 +169,3 @@ while player.conscious and npc.conscious:
         if player.health <= 0:
             print("You have been defeated. Game Over...")
             player.conscious = False
-
-
-
-
