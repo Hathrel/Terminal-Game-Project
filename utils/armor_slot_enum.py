@@ -7,3 +7,4 @@ class Armor_Slot(Enum):
     HANDS = 3
     LEGS = 4
     FEET = 5
+    SHIELD = 6
