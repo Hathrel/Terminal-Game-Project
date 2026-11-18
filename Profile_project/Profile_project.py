@@ -68,22 +68,10 @@ class Human:
 
 weapon_rack = [Longsword, Mace, Dagger, Greatsword]
 
-def assign_name():
-    first_names = ["Nicostratus", "Sostratus", "Patricius", "Leonius", "Beringarius", "Nerva", "Saul", "Demetrius", "Viggo", "Philandrus", "Philocrates", "Ladislaus", "Amatus", "Fidelis"]
-    last_names = ["Procillus", "Cossus", "Clineas", "Blasio", "Laevinus", "Regillensis", "Pictor", "Libo", "Spinther", "Rutilus", "Mocilla", "Sacerdos", "Sisenna", "Crus", "Potitus"]
-    name = first_names[roll_int(0, len(first_names) - 1)] + " " + last_names[roll_int(0, len(last_names) - 1)]
-    return name
-
-npc = Human(assign_name(), weapon = weapon_rack[roll_int(0, len(weapon_rack) - 1)])
-
 print("""
-
 You enter the arena to the roar of the crowd. A man in the emperor's box with a booming voice shouts, "Welcome, one and all, back to The Arena!"
-
 The crowd roars again. After the din dies down, the announcer continues. "Today, we see battle between two fierce competitors! First, we have {npc} using a {weapon1}!"
-
 Once more the arena erupts in cheers, some even chanting {npc}'s name.
-
 "And second, we have...
 """.format(npc = npc.name, weapon1 = npc.weapon))
 
@@ -146,14 +134,11 @@ while player.conscious and npc.conscious:
             print("DEBUG: Player: Str: {strength} Def: {defense} \n DEBUG: NPC: Str: {npcstr} Def: {npcdef}".format(strength = player.strength, defense = player.defense, npcstr = npc.strength, npcdef = npc.defense))
         else:
             print("You can't do that!")
-        #Admittedly this was annoying difficult. Hours upon hours figuring out why the loop wouldn't break appropriately or return the
-        #right output. All because I declared this and the NPC unconscious condition at the top of the game loop
         if npc.health <= 0:
 
             print("You have won! Congratulations! The crowd roars and chants your name over and over.")
             npc.conscious = False
 
-    #NPC Logic. Not smart enough to be called AI. Ensures you get a unique fight every game load.
     while npc_turn == True and player_turn == False:
         action_choice = roll_int(1,100)
         if debugging == True:
