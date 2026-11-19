@@ -1,3 +1,3 @@
 from equipment_rack import *
-from armor_stand import ArmorStand
-from inventory import Inventory
+from armor_stand import *
+from inventory import *

@@ -1,2 +1,2 @@
-from .armor import Armor
-from .shield import Shield
+from .armor import * 
+from .shield import * 
