@@ -1,5 +1,5 @@
 from .roll import roll_dice
-from .controller_enum import Controller
+from .controller_enum import Controller_Type
 from .armor_slot_enum import Armor_Slot
 from .name_generator import Name_Generator
 from .output_interface import output
