@@ -35,14 +35,22 @@ def slot_string(slot: Armor_Slot):
             return "chest"
         case Armor_Slot.HANDS:
             return "hands"
+        case Armor_Slot.LEGS:
+            return "legs"
         case Armor_Slot.FEET:
             return "feet"
         case Armor_Slot.SHIELD:
             return "shield arm"
 
+def no_armor_specified_m(slot: Armor_Slot):
+    return f"You mime putting armor onto your {slot_string(slot)}..."
+
 def already_wearing_armor_m(item: Armor|Shield, slot: Armor|Shield):
-    print(f"You cannot equip {item}, you're already wearing {plural_check(slot)}!")
+    return f"You cannot equip {item}, you're already wearing {plural_check(slot)}!"
+
+def already_wearing_item_m(item: Armor|Shield):
+    return f"You're already wearing {item}!"
 
 def wrong_armor_type_m(item: Armor|Shield, slot_type: Armor_Slot):
     verb = "fall" if plural_object(item) else "falls"
-    print(f"You try to put the {item} on your {slot_string(slot_type)}. {they_it_check(item).capitalize()} {verb} off...") 
+    return f"You try to put the {item} on your {slot_string(slot_type)}. {they_it_check(item).capitalize()} {verb} off..."
