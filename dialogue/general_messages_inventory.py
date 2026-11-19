@@ -1,7 +1,7 @@
 
 from ..equipment import Inventory
 
-def inventory_check(inventory: Inventory) -> str:
+def inventory_check_m(inventory: Inventory) -> str:
     items = inventory.inventory
     money = inventory.money
 
