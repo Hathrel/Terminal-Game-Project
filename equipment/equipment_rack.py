@@ -39,3 +39,9 @@ STEEL_GREAVES = Armor("Steel Greaves", 5, 7, Armor_Slot.LEGS)
 LEATHER_BOOTS = Armor("Leather Boots", 1, 2, Armor_Slot.FEET)
 IRON_SABATONS = Armor("Iron Sabatons", 2, 3, Armor_Slot.FEET)
 STEEL_SABATONS = Armor("Steel Sabatons", 3, 4, Armor_Slot.FEET)
+
+# WEAPONS
+
+# Basic
+# Damage - Attack - Blunt
+FISTS = Weapon("Fists", 4, 3, True)

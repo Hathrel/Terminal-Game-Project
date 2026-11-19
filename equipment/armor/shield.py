@@ -5,7 +5,7 @@ class Shield:
         self.name: str = name
         self.block_chance: int = block_chance
         self.defense: int = defense
-        self.armor_slot: Armor_Slot = Armor_Slot.SHIELD
+        self.slot_type: Armor_Slot = Armor_Slot.SHIELD
 
     def __repr__(self):
         return self.name
