@@ -16,3 +16,30 @@ class Shield:
             return roll_dice(100) <= self.block_chance
         else:
             return False
+
+class BreakableShield(Shield):
+    def __init__(self, name: str, block_chance: int, defense: int, value: int, durability: int, defensive_break: bool):
+        super().__init__(name, block_chance, defense, value)
+        self.current_durability = durability
+        self.max_durability = durability
+        self.defensive_break = defensive_break
+
+    @property
+    def broken(self) -> bool:
+        return self.max_durability <= 0
+
+    def break_check(self) -> bool:
+        if self.current_durability <= 0 and not self.defensive_break:
+            return True
+        elif self.defensive_break:
+            return self.max_durability >= roll_dice(100)
+        else:
+            return False
+
+    def damage_armor(self, damage: int) -> bool:
+        if not self.defensive_break:
+            self.current_durability -= damage
+        if self.break_check():
+            self.current_durability = 0
+            self.max_durability = 0
+        return self.broken
