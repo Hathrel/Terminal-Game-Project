@@ -3,11 +3,11 @@ from ...utils import roll_dice
 
 
 class Weapon:
-    def __init__(self, name: str, damage: int, attack: int, blunt: bool):
+    def __init__(self, name: str, damage: int, attack: int, value: int):
         self.name: str = name
         self.damage: int = damage
         self.attack: int = attack
-        self.blunt: bool = blunt
+        self.value: int = value
 
     def __repr__(self):
         return self.name
@@ -18,11 +18,16 @@ class Weapon:
     def roll_damage(self, armor: int) -> int:
         return roll_dice(self.damage) + self.damage - armor
 
+class BluntWeapon(Weapon):
+    def __init__(self, name: str, damage: int, attack: int, value: int, knockout_chance: int):
+        super().__init__(name, damage, attack, value)
+        self.knockout = knockout_chance
+
     def roll_knockout(self, hit: bool) -> bool:
-        if self.blunt and hit:
-            return roll_dice(100) <= 8
-        else:
-            return False
+        if hit:
+            return self.knockout >= roll_dice(100)
+        return False
+
 
 #        self.stats = {
 #            "Longsword": {"damage": 5, "attack": 10},
