@@ -45,6 +45,9 @@ def slot_string(slot: Armor_Slot):
 def no_armor_specified_m(slot: Armor_Slot):
     return f"You mime putting armor onto your {slot_string(slot)}..."
 
+def no_armor_specified_m2(slot: Armor_Slot):
+    return f"You mime removing armor from your {slot_string(slot)}..."
+
 def already_wearing_armor_m(item: Armor|Shield, slot: Armor|Shield):
     return f"You cannot equip {item}, you're already wearing {plural_check(slot)}!"
 

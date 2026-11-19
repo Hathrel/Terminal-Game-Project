@@ -1,1 +1,1 @@
-from weapon import Weapon
+from weapon import Weapon, BluntWeapon
