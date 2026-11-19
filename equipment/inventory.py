@@ -1,5 +1,5 @@
 from . import ArmorStand, Armor, Weapon, Shield
-from ..dialogue import inventory_check
+from ..dialogue import inventory_check_m
 from ..utils import output
 
 class Inventory:
@@ -10,7 +10,7 @@ class Inventory:
         self.armor: ArmorStand = ArmorStand()
 
     def peek_inventory(self):
-        output(inventory_check(self))
+        output(inventory_check_m(self))
 
     def equip(self):
         pass

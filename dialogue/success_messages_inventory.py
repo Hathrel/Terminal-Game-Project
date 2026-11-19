@@ -23,12 +23,12 @@ body_part_verbs_unequip = {
         "shield arm": ["remove", "slip", "unstrap"]
         }
 
-def successful_equip(item: Armor|Shield, slot: Armor_Slot):
+def successful_equip_m(item: Armor|Shield, slot: Armor_Slot):
     body_part = slot_string(slot) 
     verb = choice(body_part_verbs_equip[body_part]) 
     return f"You {verb} the {item} onto your {body_part}"
 
-def successful_unequip(item: Armor|Shield, slot: Armor_Slot):
+def successful_unequip_m(item: Armor|Shield, slot: Armor_Slot):
     body_part = slot_string(slot)
     verb = choice(body_part_verbs_unequip[body_part])
     return f"You {verb} the {item} from your {body_part}"

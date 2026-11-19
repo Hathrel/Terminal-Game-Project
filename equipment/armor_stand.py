@@ -4,8 +4,8 @@ from ..dialogue import (
     wrong_armor_type_m,
     no_armor_specified_m,
     already_wearing_item_m,
-    successful_equip,
-    successful_unequip,
+    successful_equip_m,
+    successful_unequip_m,
     no_armor_specified_m2,
 )
 from ..utils import Armor_Slot, output
@@ -81,7 +81,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.head_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.head_slot is item
 
             case "shoulders":
@@ -100,7 +100,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.shoulder_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.shoulder_slot is item
 
             case "chest":
@@ -119,7 +119,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.chest_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.chest_slot is item
 
             case "hands":
@@ -138,7 +138,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.hands_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.hands_slot is item
 
             case "legs":
@@ -157,7 +157,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.legs_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.legs_slot is item
 
             case "feet":
@@ -176,7 +176,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.boots_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.boots_slot is item
 
             case "arm":
@@ -195,7 +195,7 @@ class ArmorStand:
                     output(already_wearing_armor_m(item, current))
                     return False
                 self.shield_slot = item
-                output(successful_equip(item, armor_slot))
+                output(successful_equip_m(item, armor_slot))
                 return self.shield_slot is item
 
             case _:
@@ -211,7 +211,7 @@ class ArmorStand:
                 if self.head_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.HEAD))
                     return True
-                output(successful_unequip(self.head_slot, Armor_Slot.HEAD))
+                output(successful_unequip_m(self.head_slot, Armor_Slot.HEAD))
                 self.head_slot = None
                 return self.head_slot is None
 
@@ -219,7 +219,7 @@ class ArmorStand:
                 if self.shoulder_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.SHOULDERS))
                     return True
-                output(successful_unequip(self.shoulder_slot, Armor_Slot.SHOULDERS))
+                output(successful_unequip_m(self.shoulder_slot, Armor_Slot.SHOULDERS))
                 self.shoulder_slot = None
                 return self.shoulder_slot is None
 
@@ -227,7 +227,7 @@ class ArmorStand:
                 if self.chest_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.CHEST))
                     return True
-                output(successful_unequip(self.chest_slot, Armor_Slot.CHEST))
+                output(successful_unequip_m(self.chest_slot, Armor_Slot.CHEST))
                 self.chest_slot = None
                 return self.chest_slot is None
 
@@ -235,7 +235,7 @@ class ArmorStand:
                 if self.hands_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.HANDS))
                     return True
-                output(successful_unequip(self.hands_slot, Armor_Slot.HANDS))
+                output(successful_unequip_m(self.hands_slot, Armor_Slot.HANDS))
                 self.hands_slot = None
                 return self.hands_slot is None
 
@@ -243,7 +243,7 @@ class ArmorStand:
                 if self.legs_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.LEGS))
                     return True
-                output(successful_unequip(self.legs_slot, Armor_Slot.LEGS))
+                output(successful_unequip_m(self.legs_slot, Armor_Slot.LEGS))
                 self.legs_slot = None
                 return self.legs_slot is None
 
@@ -251,7 +251,7 @@ class ArmorStand:
                 if self.boots_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.FEET))
                     return True
-                output(successful_unequip(self.boots_slot, Armor_Slot.FEET))
+                output(successful_unequip_m(self.boots_slot, Armor_Slot.FEET))
                 self.boots_slot = None
                 return self.boots_slot is None
 
@@ -259,7 +259,7 @@ class ArmorStand:
                 if self.shield_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.SHIELD))
                     return True
-                output(successful_unequip(self.shield_slot, Armor_Slot.SHIELD))
+                output(successful_unequip_m(self.shield_slot, Armor_Slot.SHIELD))
                 self.shield_slot = None
                 return self.shield_slot is None
 
