@@ -1,11 +1,11 @@
 from __future__ import annotations
-from utils import roll_dice, Controller
+from utils import roll_dice, Controller_Type
 from equipment.weapons import Weapon
-from equipment import FISTS, ArmorStand
+from equipment import FISTS, Inventory
 from debugging import debug, Debugger
 
 class Human:
-    def __init__(self, name: str, age: int, controller: Controller):
+    def __init__(self, name: str, age: int, controller: Controller_Type):
        
         self.name: str = name
         self.experience: int = 0
@@ -20,10 +20,10 @@ class Human:
         
         self.health: int = self.fortitude * 10 + 90
         self.conscious: bool = True
-        self.controller: Controller = controller
+        self.controller: Controller_Type = controller
         self.is_defending = False
         self._weapon: Weapon|None = None
-        self.armor: ArmorStand = ArmorStand() 
+        self.inventory: Inventory = Inventory() 
 
 # -------Attributes Modifiers-------
 
