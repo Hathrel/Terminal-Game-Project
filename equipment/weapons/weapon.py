@@ -3,10 +3,9 @@ from ...utils import roll_dice
 
 
 class Weapon:
-    def __init__(self, name: str, damage: int, roll: int, attack: int, blunt: bool):
+    def __init__(self, name: str, damage: int, attack: int, blunt: bool):
         self.name: str = name
         self.damage: int = damage
-        self.roll: int = roll
         self.attack: int = attack
         self.blunt: bool = blunt
 
@@ -17,7 +16,7 @@ class Weapon:
         return roll_dice(30) + self.attack >= defense
 
     def roll_damage(self, armor: int) -> int:
-        return roll_dice(self.roll) + self.damage - armor
+        return roll_dice(self.damage) + self.damage - armor
 
     def roll_knockout(self, hit: bool) -> bool:
         if self.blunt and hit:
