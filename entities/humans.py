@@ -1,8 +1,7 @@
 from __future__ import annotations
 from utils import roll_dice, Controller_Type
 from equipment.weapons import Weapon
-from equipment import FISTS, Inventory
-from debugging import debug, Debugger
+from equipment import Inventory
 
 class Human:
     def __init__(self, name: str, age: int, controller: Controller_Type):
@@ -22,7 +21,6 @@ class Human:
         self.conscious: bool = True
         self.controller: Controller_Type = controller
         self.is_defending = False
-        self._weapon: Weapon|None = None
         self.inventory: Inventory = Inventory() 
 
 # -------Attributes Modifiers-------
@@ -88,16 +86,6 @@ class Human:
     def conscious_alive(self) -> bool:
         return self.conscious and self.alive
 
-    @property
-    def weapon(self) -> Weapon:
-        if self._weapon is None:
-            return FISTS
-        else:
-            return self._weapon
-      
-    @weapon.setter
-    def weapon(self, weapon: Weapon|None):
-        self._weapon = weapon
 
 # -----------Actions---------------
 
