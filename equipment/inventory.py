@@ -1,4 +1,4 @@
-from . import ArmorStand, Armor, Weapon, Shield, BreakableArmor, BreakableShield
+from . import ArmorStand, Armor, Weapon, Shield, BreakableArmor, BreakableShield, FISTS
 from ..dialogue import inventory_check_m
 from ..utils import output, Armor_Slot
 from ..debugging import success_message_auto, failure_message_auto, generic_message_auto
@@ -8,8 +8,19 @@ class Inventory:
     def __init__(self):
         self.inventory: list[Armor|Weapon|Shield] = []
         self.money: int = 0
-        self.weapon: Weapon|None = None
+        self._weapon: Weapon|None = None
         self.armor: ArmorStand = ArmorStand()
+
+    @property
+    def weapon(self) -> Weapon:
+        if self._weapon is None:
+            return FISTS
+        else:
+            return self._weapon
+      
+    @weapon.setter
+    def weapon(self, weapon: Weapon|None):
+        self._weapon = weapon
 
     def peek_inventory(self):
         output(inventory_check_m(self))
