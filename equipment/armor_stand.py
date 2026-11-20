@@ -10,6 +10,7 @@ from ..dialogue import (
     slot_string,
 )
 from ..utils import Armor_Slot, output
+from debugging import failure_message_auto, success_message_auto
 
 
 class ArmorStand:
@@ -70,7 +71,7 @@ class ArmorStand:
                 armor_slot = Armor_Slot.HEAD
                 current = self.head_slot
                 if item is BreakableArmor and item.broken:
-                    pass # failure message
+                    failure_message_auto()
                     return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -92,7 +93,7 @@ class ArmorStand:
                 armor_slot = Armor_Slot.SHOULDERS
                 current = self.shoulder_slot
                 if item is BreakableArmor and item.broken:
-                    pass # failure message
+                    failure_message_auto()
                     return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -114,7 +115,7 @@ class ArmorStand:
                 armor_slot = Armor_Slot.CHEST
                 current = self.chest_slot
                 if item is BreakableArmor and item.broken:
-                    pass # failure message
+                    failure_message_auto()
                     return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -136,7 +137,7 @@ class ArmorStand:
                 armor_slot = Armor_Slot.HANDS
                 current = self.hands_slot
                 if item is BreakableArmor and item.broken:
-                    pass # failure message
+                    failure_message_auto() 
                     return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -158,51 +159,7 @@ class ArmorStand:
                 armor_slot = Armor_Slot.LEGS
                 current = self.legs_slot
                 if item is BreakableArmor and item.broken:
-                    pass # failure message
-                    return False               
-                if item is None:
-                    output(no_armor_specified_m(armor_slot))
-                    return False
-                if current is item:
-                    output(already_wearing_item_m(item))
-                    return True
-                if item.slot_type != armor_slot:
-                    output(wrong_armor_type_m(item, armor_slot))
-                    return False
-                if current is not None:
-                    output(already_wearing_armor_m(item, current))
-                    return False
-                self.legs_slot = item
-                output(successful_equip_m(item, armor_slot))
-                return self.legs_slot is item
-
-            case "feet":
-                armor_slot = Armor_Slot.FEET
-                current = self.boots_slot
-                if item is BreakableArmor and item.broken:
-                    pass # failure message
-                    return False               
-                if item is None:
-                    output(no_armor_specified_m(armor_slot))
-                    return False
-                if current is item:
-                    output(already_wearing_item_m(item))
-                    return True
-                if item.slot_type != armor_slot:
-                    output(wrong_armor_type_m(item, armor_slot))
-                    return False
-                if current is not None:
-                    output(already_wearing_armor_m(item, current))
-                    return False
-                self.boots_slot = item
-                output(successful_equip_m(item, armor_slot))
-                return self.boots_slot is item
-
-            case "shield arm":
-                armor_slot = Armor_Slot.SHIELD
-                current = self.shield_slot
-                if item is BreakableShield and item.broken:
-                    pass # failure message
+                    failure_message_auto()
                     return False               
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -225,65 +182,69 @@ class ArmorStand:
 
     # -------- Unequip --------
 
-    def unequip(self, armor_slot: Armor_Slot) -> bool:
+    def unequip(self, armor_slot: Armor_Slot) -> Armor | Shield | None:
         slot: str = slot_string(armor_slot)
 
         match slot:
             case "head":
                 if self.head_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.HEAD))
-                    return True
+                    return 
                 output(successful_unequip_m(self.head_slot, Armor_Slot.HEAD))
+                item_return = self.head_slot
                 self.head_slot = None
-                return self.head_slot is None
+                return item_return
 
             case "shoulders":
                 if self.shoulder_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.SHOULDERS))
-                    return True
+                    return 
                 output(successful_unequip_m(self.shoulder_slot, Armor_Slot.SHOULDERS))
+                item_return = self.shoulder_slot
                 self.shoulder_slot = None
-                return self.shoulder_slot is None
+                return item_return
 
             case "chest":
                 if self.chest_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.CHEST))
-                    return True
+                    return 
                 output(successful_unequip_m(self.chest_slot, Armor_Slot.CHEST))
+                item_return = self.chest_slot
                 self.chest_slot = None
-                return self.chest_slot is None
+                return item_return
 
             case "hands":
                 if self.hands_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.HANDS))
-                    return True
+                    return 
                 output(successful_unequip_m(self.hands_slot, Armor_Slot.HANDS))
+                item_return = self.hands_slot
                 self.hands_slot = None
-                return self.hands_slot is None
+                return item_return
 
             case "legs":
                 if self.legs_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.LEGS))
-                    return True
+                    return 
                 output(successful_unequip_m(self.legs_slot, Armor_Slot.LEGS))
+                item_return = self.legs_slot
                 self.legs_slot = None
-                return self.legs_slot is None
+                return item_return
 
             case "feet":
                 if self.boots_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.FEET))
-                    return True
+                    return 
                 output(successful_unequip_m(self.boots_slot, Armor_Slot.FEET))
+                item_return = self.boots_slot
                 self.boots_slot = None
-                return self.boots_slot is None
+                return item_return
 
             case "shield arm":
                 if self.shield_slot is None:
                     output(no_armor_specified_m2(Armor_Slot.SHIELD))
-                    return True
+                    return
                 output(successful_unequip_m(self.shield_slot, Armor_Slot.SHIELD))
+                item_return = self.shield_slot
                 self.shield_slot = None
-                return self.shield_slot is None
-
-            case _:
-                return False
+                return item_return
