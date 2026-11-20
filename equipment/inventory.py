@@ -25,7 +25,7 @@ class Inventory:
     def peek_inventory(self):
         output(inventory_check_m(self))
 
-    def equip(self, item: Shield|Armor|None, slot: Armor_Slot):
+    def equip_armor(self, item: Shield|Armor|None, slot: Armor_Slot):
         self.armor.equip(item, slot)
 
     def unequip_armor(self, slot: Armor_Slot):
