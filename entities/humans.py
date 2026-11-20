@@ -87,7 +87,7 @@ class Human:
         return self.conscious and self.alive
 
 
-# -----------Actions---------------
+# ------------Actions---------------
 
     def defend(self):
         if self.conscious_alive:
