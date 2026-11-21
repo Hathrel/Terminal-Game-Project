@@ -1,3 +1,5 @@
+"""Define the game's predefined armor and weapon items."""
+
 from armor import Armor, Shield
 from weapons import Weapon, BluntWeapon
 from ..utils import Armor_Slot

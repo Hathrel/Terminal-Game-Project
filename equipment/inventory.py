@@ -1,3 +1,5 @@
+"""Track carried items, equipped gear, and coin transactions."""
+
 from . import ArmorStand, Armor, Weapon, Shield, BreakableArmor, BreakableShield, FISTS
 from ..dialogue import inventory_check_m
 from ..utils import output, Armor_Slot
@@ -5,7 +7,10 @@ from ..debugging import success_message_auto, failure_message_auto, generic_mess
 import copy
 
 class Inventory:
+    """A character's carried items, equipment, and money."""
+
     def __init__(self):
+        """Start with no carried items, coins, or equipped gear."""
         self.inventory: list[Armor|Weapon|Shield] = []
         self.money: int = 0
         self._weapon: Weapon|None = None
@@ -13,6 +18,7 @@ class Inventory:
 
     @property
     def weapon(self) -> Weapon:
+        """Return the equipped weapon, defaulting to fists when unarmed."""
         if self._weapon is None:
             return FISTS
         else:
@@ -20,20 +26,25 @@ class Inventory:
       
     @weapon.setter
     def weapon(self, weapon: Weapon|None):
+        """Set the equipped weapon or clear it with None."""
         self._weapon = weapon
 
     def peek_inventory(self):
+        """Display the contents of the footchest and its coin balance."""
         output(inventory_check_m(self))
 
     def equip_armor(self, item: Shield|Armor|None, slot: Armor_Slot) -> bool:
+        """Attempt to equip armor through the armor stand and return its result."""
         return self.armor.equip(item, slot)
 
     def unequip_armor(self, slot: Armor_Slot):
+        """Remove the item in the given slot and store it in the inventory if present."""
         item = self.armor.unequip(slot)
         if item:
             self.inventory.append(item)
 
     def buy(self, item: Shield|Armor|Weapon) -> bool:
+        """Buy a shallow copy of an item if its price is affordable."""
         if self.money >= item.value:
             self.money -= item.value
             self.inventory.append(copy.copy(item))
@@ -44,6 +55,7 @@ class Inventory:
             return False
 
     def sell(self, item: Shield|Armor|Weapon) -> bool:
+        """Sell the first carried item with the given name at a durability-adjusted price."""
         item_list = []
         for obj in self.inventory:
             if obj.name == item.name:
@@ -68,6 +80,7 @@ class Inventory:
         return True
 
     def trash(self, item: Shield|Armor|Weapon) -> bool:
+        """Discard the item if present and report whether it was removed."""
         if item in self.inventory:
             self.inventory.remove(item)
             success_message_auto()

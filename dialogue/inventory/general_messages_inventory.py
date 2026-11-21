@@ -1,7 +1,9 @@
+"""Format descriptions of the player's inventory."""
 
 from ...equipment import Inventory
 
 def inventory_check_m(inventory: Inventory) -> str:
+    """Describe the footchest contents and include any positive coin balance."""
     items = inventory.inventory
     money = inventory.money
 

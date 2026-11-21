@@ -1,3 +1,5 @@
+"""Track equipped armor and handle changes to equipment slots."""
+
 from armor import Armor, Shield, BreakableArmor, BreakableShield
 from ..dialogue import (
     already_wearing_armor_m,
@@ -14,7 +16,10 @@ from debugging import failure_message_auto, success_message_auto
 
 
 class ArmorStand:
+    """The armor and shield slots for a character's worn equipment."""
+
     def __init__(self):
+        """Initialize every equipment slot as empty."""
         self.head_slot: Armor | None = None
         self.shoulder_slot: Armor | None = None
         self.chest_slot: Armor | None = None
@@ -27,6 +32,7 @@ class ArmorStand:
 
     @property
     def defense(self) -> int:
+        """Return total defense from equipped armor and the shield."""
         defense = 0
         if self.head_slot:
             defense += self.head_slot.defense
@@ -46,6 +52,7 @@ class ArmorStand:
 
     @property
     def armor(self) -> int:
+        """Return total armor protection from the six worn armor slots."""
         armor = 0
         if self.head_slot:
             armor += self.head_slot.armor
@@ -64,6 +71,7 @@ class ArmorStand:
     # -------- Equip --------
 
     def equip(self, item: Armor | Shield | None, armor_slot: Armor_Slot) -> bool:
+        """Attempt to equip an item in the requested slot and report success."""
         slot: str = slot_string(armor_slot)
 
         match slot:
@@ -183,6 +191,7 @@ class ArmorStand:
     # -------- Unequip --------
 
     def unequip(self, armor_slot: Armor_Slot) -> Armor | Shield | None:
+        """Clear the requested slot and return its item, or return None if empty."""
         slot: str = slot_string(armor_slot)
 
         match slot:

@@ -1,6 +1,9 @@
+"""Generate unique character names from predefined first and last names."""
+
 from random import choice
 
 class Name_Generator:
+    """Generate names and track those already assigned."""
 
     used_names: list[str] = []
     first_names = ["Nicostratus", "Sostratus", "Patricius", "Leonius", "Beringarius", "Nerva", "Saul", "Demetrius", "Viggo", "Philandrus", "Philocrates", "Ladislaus", "Amatus", "Fidelis"]
@@ -8,6 +11,7 @@ class Name_Generator:
 
     @staticmethod
     def assign_name() -> str:
+        """Generate and record an unused name, or raise RuntimeError after failed attempts."""
         name = None
         loop_counter = len(Name_Generator.first_names) * len(Name_Generator.last_names)
         while (name is None or name in Name_Generator.used_names) and loop_counter > 0:

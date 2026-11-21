@@ -1,3 +1,5 @@
+"""Format successful equipment changes with verbs chosen for each slot."""
+
 from ...utils import Armor_Slot
 from equipment.armor import Armor, Shield
 from .error_messages_inventory import slot_string
@@ -24,11 +26,13 @@ body_part_verbs_unequip = {
         }
 
 def successful_equip_m(item: Armor|Shield, slot: Armor_Slot):
+    """Describe equipping an item using a randomly chosen verb for the slot."""
     body_part = slot_string(slot) 
     verb = choice(body_part_verbs_equip[body_part]) 
     return f"You {verb} the {item} onto your {body_part}"
 
 def successful_unequip_m(item: Armor|Shield, slot: Armor_Slot):
+    """Describe removing an item using a randomly chosen verb for the slot."""
     body_part = slot_string(slot)
     verb = choice(body_part_verbs_unequip[body_part])
     return f"You {verb} the {item} from your {body_part}"
