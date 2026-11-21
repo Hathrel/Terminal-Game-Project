@@ -25,15 +25,15 @@ class Inventory:
     def peek_inventory(self):
         output(inventory_check_m(self))
 
-    def equip_armor(self, item: Shield|Armor|None, slot: Armor_Slot):
-        self.armor.equip(item, slot)
+    def equip_armor(self, item: Shield|Armor|None, slot: Armor_Slot) -> bool:
+        return self.armor.equip(item, slot)
 
     def unequip_armor(self, slot: Armor_Slot):
         item = self.armor.unequip(slot)
         if item:
             self.inventory.append(item)
 
-    def buy(self, item: Shield|Armor|Weapon):
+    def buy(self, item: Shield|Armor|Weapon) -> bool:
         if self.money >= item.value:
             self.money -= item.value
             self.inventory.append(copy.copy(item))
@@ -43,7 +43,7 @@ class Inventory:
             failure_message_auto()
             return False
 
-    def sell(self, item: Shield|Armor|Weapon):
+    def sell(self, item: Shield|Armor|Weapon) -> bool:
         item_list = []
         for obj in self.inventory:
             if obj.name == item.name:
@@ -67,7 +67,7 @@ class Inventory:
         success_message_auto()
         return True
 
-    def trash(self, item: Shield|Armor|Weapon):
+    def trash(self, item: Shield|Armor|Weapon) -> bool:
         if item in self.inventory:
             self.inventory.remove(item)
             success_message_auto()

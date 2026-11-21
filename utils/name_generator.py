@@ -7,7 +7,7 @@ class Name_Generator:
     last_names = ["Procillus", "Cossus", "Clineas", "Blasio", "Laevinus", "Regillensis", "Pictor", "Libo", "Spinther", "Rutilus", "Mocilla", "Sacerdos", "Sisenna", "Crus", "Potitus"]
 
     @staticmethod
-    def assign_name():
+    def assign_name() -> str:
         name = None
         loop_counter = len(Name_Generator.first_names) * len(Name_Generator.last_names)
         while (name is None or name in Name_Generator.used_names) and loop_counter > 0:

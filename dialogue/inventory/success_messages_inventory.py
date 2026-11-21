@@ -1,4 +1,4 @@
-from ..utils import Armor_Slot
+from ...utils import Armor_Slot
 from equipment.armor import Armor, Shield
 from .error_messages_inventory import slot_string
 from random import choice

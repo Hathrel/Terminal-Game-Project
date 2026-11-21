@@ -1,5 +1,5 @@
 
-from ..equipment import Inventory
+from ...equipment import Inventory
 
 def inventory_check_m(inventory: Inventory) -> str:
     items = inventory.inventory
