@@ -8,7 +8,7 @@
 - [x] Provide a shared dice roller with inclusive results from 1 through the specified die size.
 - [x] Route terminal text through a shared output function.
 - [x] Provide toggleable debug output and automatic success, failure, and generic dialogue placeholders that identify the caller’s file, class when available, and method. Accept a descriptive category for generic placeholders, such as `generic_message_auto("Shopping List")`.
-- [ ] Keep remaining dialogue placeholders recognizable during playtesting so each missing line of flavor text can be located while functional development continues.
+- [x] Keep remaining dialogue placeholders recognizable during playtesting so each missing line of flavor text can be located while functional development continues.
 - [ ] Establish a consistent package import strategy for standalone launch and tests. Resolve relative imports beyond the package root, sibling imports, and the inventory/dialogue import cycle.
 - [ ] Provide a terminal entry point, document the launch command, and verify that it can construct a character and open the game loop.
 
@@ -37,7 +37,7 @@
 - [x] Sum equipped defense across body armor and shield, and sum mitigation across body armor.
 - [x] Define equip handlers for head, shoulders, chest, and hands with checks for missing items, wrong slots, occupied slots, and re-equipping the same object.
 - [x] Define unequip handlers for all seven slots and return the removed item to inventory through the inventory action.
-- [ ] Equip leg armor into the leg slot and add equip handling for boots and shields.
+- [x] Equip leg armor into the leg slot and add equip handling for boots and shields.
 - [ ] Validate item ownership and transfer items between storage and equipped slots without duplication or item loss. Reject broken gear before equipping it.
 - [x] Format footchest contents for empty, single-item, two-item, and longer lists, with a coin balance when positive.
 - [x] Format slot-aware equipment feedback with singular/plural grammar and varied equip and unequip verbs.
@@ -133,6 +133,6 @@
 
 ## 10. Development workflow
 
-- [ ] Commit frequently in units of one coherent change, using concise, descriptive commit messages.
-- [ ] Preserve the original 2023 project on `master` and develop the refactor on `update`.
+- [x] Commit frequently in units of one coherent change, using concise, descriptive commit messages.
+- [x] Preserve the original 2023 project on `master` and develop the refactor on `update`.
 - [ ] If the project becomes a release candidate, decide whether to create a separate repository.

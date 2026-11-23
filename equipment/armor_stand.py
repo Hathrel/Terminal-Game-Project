@@ -70,17 +70,18 @@ class ArmorStand:
 
     # -------- Equip --------
 
-    def equip(self, item: Armor | Shield | None, armor_slot: Armor_Slot) -> bool:
+    def equip(self, item: Armor | BreakableArmor | Shield | BreakableShield | None, armor_slot: Armor_Slot) -> bool:
         """Attempt to equip an item in the requested slot and report success."""
         slot: str = slot_string(armor_slot)
+
+        if isinstance(item, (BreakableShield, BreakableArmor)) and item.broken:
+            failure_message_auto()
+            return False
 
         match slot:
             case "head":
                 armor_slot = Armor_Slot.HEAD
                 current = self.head_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto()
-                    return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
@@ -100,9 +101,6 @@ class ArmorStand:
             case "shoulders":
                 armor_slot = Armor_Slot.SHOULDERS
                 current = self.shoulder_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto()
-                    return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
@@ -122,9 +120,6 @@ class ArmorStand:
             case "chest":
                 armor_slot = Armor_Slot.CHEST
                 current = self.chest_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto()
-                    return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
@@ -144,9 +139,6 @@ class ArmorStand:
             case "hands":
                 armor_slot = Armor_Slot.HANDS
                 current = self.hands_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto() 
-                    return False
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
@@ -166,9 +158,6 @@ class ArmorStand:
             case "legs":
                 armor_slot = Armor_Slot.LEGS
                 current = self.legs_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto()
-                    return False               
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
@@ -188,9 +177,6 @@ class ArmorStand:
             case "feet":
                 armor_slot = Armor_Slot.FEET
                 current = self.boots_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto()
-                    return False               
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
@@ -210,9 +196,6 @@ class ArmorStand:
             case "shield arm":
                 armor_slot = Armor_Slot.SHIELD
                 current = self.shield_slot
-                if item is BreakableArmor and item.broken:
-                    failure_message_auto()
-                    return False               
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
                     return False
