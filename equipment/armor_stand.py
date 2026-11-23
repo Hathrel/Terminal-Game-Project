@@ -181,6 +181,50 @@ class ArmorStand:
                 if current is not None:
                     output(already_wearing_armor_m(item, current))
                     return False
+                self.legs_slot = item
+                output(successful_equip_m(item, armor_slot))
+                return self.legs_slot is item
+
+            case "feet":
+                armor_slot = Armor_Slot.FEET
+                current = self.boots_slot
+                if item is BreakableArmor and item.broken:
+                    failure_message_auto()
+                    return False               
+                if item is None:
+                    output(no_armor_specified_m(armor_slot))
+                    return False
+                if current is item:
+                    output(already_wearing_item_m(item))
+                    return True
+                if item.slot_type != armor_slot:
+                    output(wrong_armor_type_m(item, armor_slot))
+                    return False
+                if current is not None:
+                    output(already_wearing_armor_m(item, current))
+                    return False
+                self.boots_slot = item
+                output(successful_equip_m(item, armor_slot))
+                return self.boots_slot is item
+
+            case "shield arm":
+                armor_slot = Armor_Slot.SHIELD
+                current = self.shield_slot
+                if item is BreakableArmor and item.broken:
+                    failure_message_auto()
+                    return False               
+                if item is None:
+                    output(no_armor_specified_m(armor_slot))
+                    return False
+                if current is item:
+                    output(already_wearing_item_m(item))
+                    return True
+                if item.slot_type != armor_slot:
+                    output(wrong_armor_type_m(item, armor_slot))
+                    return False
+                if current is not None:
+                    output(already_wearing_armor_m(item, current))
+                    return False
                 self.shield_slot = item
                 output(successful_equip_m(item, armor_slot))
                 return self.shield_slot is item
