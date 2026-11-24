@@ -21,8 +21,12 @@ class Shield(Item, BreakableItem):
         return self._material
 
     @property
+    def __stat_mod(self):
+        return self.material.stat_mod
+
+    @property
     def defense(self):
-        return floor(self._defense * self.material.stat_mod)
+        return floor(self._defense * self.__stat_mod)
 
     @property
     def block_chance(self):
