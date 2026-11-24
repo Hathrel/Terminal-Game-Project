@@ -1,6 +1,6 @@
 """Track equipped armor and handle changes to equipment slots."""
 
-from armor import Armor, Shield, BreakableArmor, BreakableShield
+from entities import Armor, Shield
 from ..dialogue import (
     already_wearing_armor_m,
     wrong_armor_type_m,
@@ -70,7 +70,7 @@ class ArmorStand:
 
     # -------- Equip --------
 
-    def equip(self, item: Armor | BreakableArmor | Shield | BreakableShield | None, armor_slot: Armor_Slot) -> bool:
+    def equip(self, item: Armor | Shield | None, armor_slot: Armor_Slot) -> bool:
         """Attempt to equip an item in the requested slot and report success."""
         slot: str = slot_string(armor_slot)
 

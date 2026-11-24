@@ -10,7 +10,7 @@ class Human(Entity):
 
     def __init__(self, name: str, age: int, controller: Controller_Type):
         """Initialize a level-one character with default attributes and an empty inventory."""
-        self.name: str = name
+        super().__init__(name)
         self.experience: int = 0
         self.level: int = 1
         self.age: int = age

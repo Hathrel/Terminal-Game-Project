@@ -3,3 +3,4 @@
 from equipment_rack import *
 from armor_stand import *
 from inventory import *
+from materials import *
