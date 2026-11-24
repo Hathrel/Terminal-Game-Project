@@ -3,7 +3,6 @@
 from __future__ import annotations
 from .entity import Entity
 from utils import roll_dice, Controller_Type
-from equipment.weapons import Weapon
 from equipment import Inventory
 
 class Human(Entity):
