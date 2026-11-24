@@ -1,6 +1,14 @@
 """Track equipped armor and handle changes to equipment slots."""
-
 from entities import Armor, Shield
+from .armor import (
+    Helmet,
+    Shoulders,
+    Chest,
+    Hands,
+    Legs,
+    Feet,
+    ShieldArm
+        )
 from ..dialogue import (
     already_wearing_armor_m,
     wrong_armor_type_m,
@@ -20,13 +28,13 @@ class ArmorStand:
 
     def __init__(self):
         """Initialize every equipment slot as empty."""
-        self.head_slot: Armor | None = None
-        self.shoulder_slot: Armor | None = None
-        self.chest_slot: Armor | None = None
-        self.hands_slot: Armor | None = None
-        self.legs_slot: Armor | None = None
-        self.boots_slot: Armor | None = None
-        self.shield_slot: Shield | None = None
+        self.head_slot: Helmet | None = None
+        self.shoulder_slot: Shoulders | None = None
+        self.chest_slot: Chest | None = None
+        self.hands_slot: Hands | None = None
+        self.legs_slot: Legs | None = None
+        self.boots_slot: Feet | None = None
+        self.shield_slot: ShieldArm | None = None
 
     # -------- Aggregate Statistics --------
 
@@ -74,13 +82,12 @@ class ArmorStand:
         """Attempt to equip an item in the requested slot and report success."""
         slot: str = slot_string(armor_slot)
 
-        if isinstance(item, (BreakableShield, BreakableArmor)) and item.broken:
+        if isinstance(item, (Armor, Shield)) and item.broken:
             failure_message_auto()
             return False
 
         match slot:
             case "head":
-                armor_slot = Armor_Slot.HEAD
                 current = self.head_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -88,7 +95,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, Helmet):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
@@ -99,7 +106,6 @@ class ArmorStand:
                 return self.head_slot is item
 
             case "shoulders":
-                armor_slot = Armor_Slot.SHOULDERS
                 current = self.shoulder_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -107,7 +113,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, Shoulders):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
@@ -118,7 +124,6 @@ class ArmorStand:
                 return self.shoulder_slot is item
 
             case "chest":
-                armor_slot = Armor_Slot.CHEST
                 current = self.chest_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -126,7 +131,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, Chest):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
@@ -137,7 +142,6 @@ class ArmorStand:
                 return self.chest_slot is item
 
             case "hands":
-                armor_slot = Armor_Slot.HANDS
                 current = self.hands_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -145,7 +149,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, Hands):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
@@ -156,7 +160,6 @@ class ArmorStand:
                 return self.hands_slot is item
 
             case "legs":
-                armor_slot = Armor_Slot.LEGS
                 current = self.legs_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -164,7 +167,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, Legs):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
@@ -175,7 +178,6 @@ class ArmorStand:
                 return self.legs_slot is item
 
             case "feet":
-                armor_slot = Armor_Slot.FEET
                 current = self.boots_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -183,7 +185,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, Feet):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
@@ -194,7 +196,6 @@ class ArmorStand:
                 return self.boots_slot is item
 
             case "shield arm":
-                armor_slot = Armor_Slot.SHIELD
                 current = self.shield_slot
                 if item is None:
                     output(no_armor_specified_m(armor_slot))
@@ -202,7 +203,7 @@ class ArmorStand:
                 if current is item:
                     output(already_wearing_item_m(item))
                     return True
-                if item.slot_type != armor_slot:
+                if not isinstance(item, ShieldArm):
                     output(wrong_armor_type_m(item, armor_slot))
                     return False
                 if current is not None:
