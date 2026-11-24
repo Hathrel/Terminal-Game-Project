@@ -22,12 +22,16 @@ class Weapon(Item, BreakableItem):
         return self._material
 
     @property
+    def __stat_mod(self):
+        return self.material.stat_mod
+
+    @property
     def damage(self):
-        return floor(self._damage * self._material.stat_mod)
+        return floor(self._damage * self.__stat_mod)
 
     @property
     def attack(self):
-        return floor(self._attack * self._material.stat_mod)
+        return floor(self._attack * self.__stat_mod)
 
     def roll_attack(self, defense: int) -> bool:
         """Add the attack bonus to a 30-sided roll and compare it with defense."""
