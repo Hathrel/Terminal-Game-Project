@@ -1,9 +1,11 @@
 """Model weapon attacks, damage, and knockout checks."""
 
+from entities import Entity
+
 from ...utils import roll_dice
 
 
-class Weapon:
+class Weapon(Entity):
     """A weapon with attack, damage, and value ratings."""
 
     def __init__(self, name: str, damage: int, attack: int, value: int):

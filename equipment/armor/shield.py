@@ -1,8 +1,10 @@
 """Model shields, blocking rolls, and shield durability."""
 
+from entities import Entity
+
 from ...utils import roll_dice, Armor_Slot
 
-class Shield:
+class Shield(Entity):
     """A shield that contributes defense and can block while defending."""
 
     def __init__(self, name: str, block_chance: int, defense: int, value: int):

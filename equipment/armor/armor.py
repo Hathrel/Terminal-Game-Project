@@ -1,8 +1,10 @@
 """Model worn armor and its durability rules."""
 
+from entities import Entity
+
 from ...utils import Armor_Slot, roll_dice
 
-class Armor:
+class Armor(Entity):
     """A wearable item that contributes defense and armor."""
 
     def __init__(self, name: str, defense: int, armor: int, value: int, slot_type: Armor_Slot):

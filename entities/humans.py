@@ -1,16 +1,16 @@
 """Model human characters, their attributes, and combat state."""
 
 from __future__ import annotations
+from .entity import Entity
 from utils import roll_dice, Controller_Type
 from equipment.weapons import Weapon
 from equipment import Inventory
 
-class Human:
+class Human(Entity):
     """A human character with attributes, health, and an inventory."""
 
     def __init__(self, name: str, age: int, controller: Controller_Type):
         """Initialize a level-one character with default attributes and an empty inventory."""
-       
         self.name: str = name
         self.experience: int = 0
         self.level: int = 1
