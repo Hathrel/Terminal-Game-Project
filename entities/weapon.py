@@ -2,17 +2,32 @@
 
 from . import Item
 from ..utils import roll_dice, BreakableItem
+from ..equipment import Material
+from math import floor
 
 
 class Weapon(Item, BreakableItem):
     """A weapon with attack, damage, and value ratings."""
 
-    def __init__(self, name: str, damage: int, attack: int, value: int, durability: int):
+    def __init__(self, name: str, damage: int, attack: int, value: int, durability: int, material: Material):
         """Set the weapon's name, damage, attack, and value."""
-        super().__init__(name, value)
-        BreakableItem.__init__(self, durability)
-        self.damage: int = damage
-        self.attack: int = attack
+        super().__init__(" ".join([material.name, name]), floor(value * material.value_modifier))
+        BreakableItem.__init__(self, floor(durability * material.stat_mod))
+        self._material: Material = material
+        self._damage: int = damage
+        self._attack: int = attack
+
+    @property
+    def material(self):
+        return self._material
+
+    @property
+    def damage(self):
+        return floor(self._damage * self._material.stat_mod)
+
+    @property
+    def attack(self):
+        return floor(self._attack * self._material.stat_mod)
 
     def roll_attack(self, defense: int) -> bool:
         """Add the attack bonus to a 30-sided roll and compare it with defense."""
@@ -22,12 +37,11 @@ class Weapon(Item, BreakableItem):
         """Roll weapon damage, add base damage, and subtract target armor."""
         return roll_dice(self.damage) + self.damage - armor
 
-class BluntWeapon(Weapon):
+class Blunt():
     """A weapon that can knock out a target on a hit."""
 
-    def __init__(self, name: str, damage: int, attack: int, value: int, durability: int, knockout_chance: int):
+    def __init__(self, knockout_chance: int):
         """Initialize the weapon with a percentile knockout chance."""
-        super().__init__(name, damage, attack, value, durability)
         self.knockout = knockout_chance
 
     def roll_knockout(self, hit: bool) -> bool:
