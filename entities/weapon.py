@@ -9,13 +9,14 @@ from math import floor
 class Weapon(Item, BreakableItem):
     """A weapon with attack, damage, and value ratings."""
 
-    def __init__(self, name: str, damage: int, attack: int, value: int, durability: int, material: Material):
+    def __init__(self, name: str, damage: int, attack: int, value: int, durability: int, material: Material, two_handed: bool):
         """Set the weapon's name, damage, attack, and value."""
         super().__init__(" ".join([material.name, name]), floor(value * material.value_modifier))
         BreakableItem.__init__(self, floor(durability * material.stat_mod))
         self._material: Material = material
         self._damage: int = damage
         self._attack: int = attack
+        self._two_handed: bool = two_handed
 
     @property
     def material(self):
@@ -32,6 +33,10 @@ class Weapon(Item, BreakableItem):
     @property
     def attack(self):
         return floor(self._attack * self.__stat_mod)
+
+    @property
+    def two_handed(self):
+        return self._two_handed
 
     def roll_attack(self, defense: int) -> bool:
         """Add the attack bonus to a 30-sided roll and compare it with defense."""
