@@ -1,91 +1,64 @@
 """Track carried items, equipped gear, and coin transactions."""
 
-from ..entities import Armor, Weapon, Shield
+from ..entities import Armor, Weapon, Shield, Item
+from ..equipment import Fists
 from .armor_stand import ArmorStand
-from ..dialogue import inventory_check_m
-from ..utils import output, Armor_Slot
+from ..utils import Armor_Slot, BreakableItem
 from ..debugging import success_message_auto, failure_message_auto, generic_message_auto
-import copy
+from uuid import UUID
 
 class Inventory:
     """A character's carried items, equipment, and money."""
 
     def __init__(self):
         """Start with no carried items, coins, or equipped gear."""
-        self.inventory: list[Armor|Weapon|Shield] = []
+        self.inventory: dict[UUID, Item] = {}
         self.money: int = 0
-        self._weapon: Weapon|None = None
+        self._weapon: Weapon = Fists()
         self.armor: ArmorStand = ArmorStand()
 
     @property
     def weapon(self) -> Weapon:
         """Return the equipped weapon, defaulting to fists when unarmed."""
-        if self._weapon is None:
-            return FISTS
-        else:
-            return self._weapon
-      
-    @weapon.setter
-    def weapon(self, weapon: Weapon|None):
-        """Set the equipped weapon or clear it with None."""
-        self._weapon = weapon
+        return self._weapon
 
-    def peek_inventory(self):
+    def __is_in_inventory(self, item: Item) -> bool:
+        if not isinstance(item, Item):
+            return False
+        else:
+            return item.id in self.inventory
+
+    def __is_item(self, item) -> bool:
+        return isinstance(item, Item)
+
+    def equip_weapon(self, weapon: Weapon | None) -> bool:
+        pass
+
+    def unequip_weapon(self) -> None:
+        pass
+
+    def peek_inventory(self) -> None:
         """Display the contents of the footchest and its coin balance."""
-        output(inventory_check_m(self))
+        pass
 
     def equip_armor(self, item: Shield|Armor|None, slot: Armor_Slot) -> bool:
         """Attempt to equip armor through the armor stand and return its result."""
-        return self.armor.equip(item, slot)
+        pass
 
-    def unequip_armor(self, slot: Armor_Slot):
+    def unequip_armor(self, slot: Armor_Slot) -> None:
         """Remove the item in the given slot and store it in the inventory if present."""
-        item = self.armor.unequip(slot)
-        if item:
-            self.inventory.append(item)
+        pass
 
-    def buy(self, item: Shield|Armor|Weapon) -> bool:
+    def buy(self, item: Item) -> bool:
         """Buy a shallow copy of an item if its price is affordable."""
-        if self.money >= item.value:
-            self.money -= item.value
-            self.inventory.append(copy.copy(item))
-            success_message_auto()
-            return True
-        else:
-            failure_message_auto()
-            return False
+        if self.money <= 0:
+            self.money = 0
+            generic_message_auto("Out of money")
 
-    def sell(self, item: Shield|Armor|Weapon) -> bool:
+    def sell(self, item: Item) -> bool:
         """Sell the first carried item with the given name at a durability-adjusted price."""
-        item_list = []
-        for obj in self.inventory:
-            if obj.name == item.name:
-                item_list.append(obj)
-        if not item_list:
-            failure_message_auto()
-            return False
-        generic_message_auto("Shopping List")
-        item_debug = item_list[0] # Get the player's input here instead of this assignemtn
-        sale_item = item_debug
-        if sale_item is None:
-            generic_message_auto("Sale cancellation")
-            return False
-        self.inventory.remove(sale_item)
-        sale_price = (sale_item.value//2)
-        if isinstance(sale_item, (BreakableShield, BreakableArmor)): 
-            sale_price -= sale_item.max_durability - sale_item.current_durability
-            if sale_item.broken:
-                sale_price //= 10
-        self.money += sale_price 
-        success_message_auto()
-        return True
+        pass
 
-    def trash(self, item: Shield|Armor|Weapon) -> bool:
+    def trash(self, item: Item) -> bool:
         """Discard the item if present and report whether it was removed."""
-        if item in self.inventory:
-            self.inventory.remove(item)
-            success_message_auto()
-            return True
-        else:
-           failure_message_auto()
-           return False
+        pass

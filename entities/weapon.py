@@ -35,6 +35,10 @@ class Weapon(Item, BreakableItem):
     def attack(self):
         return floor(self._attack * self.__stat_mod)
 
+    @property
+    def two_handed(self):
+        return self._two_handed
+
     def roll_attack(self, defense: int) -> bool:
         """Add the attack bonus to a 30-sided roll and compare it with defense."""
         return roll_dice(30) + self.attack >= defense

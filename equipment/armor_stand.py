@@ -1,4 +1,6 @@
 """Track equipped armor and handle changes to equipment slots."""
+from types import coroutine
+
 from entities import Armor, Shield
 from .armor import (
     Helmet,
@@ -19,7 +21,8 @@ from ..dialogue import (
     no_armor_specified_m2,
     slot_string,
 )
-from ..utils import Armor_Slot, output
+from ..utils import Armor_Slot, Armor_Result, Message_Enum
+from ..dialogue import Dialogue_Courier
 from debugging import failure_message_auto, success_message_auto
 
 
@@ -78,29 +81,43 @@ class ArmorStand:
 
     # -------- Equip --------
 
-    def equip(self, item: Armor | Shield | None, armor_slot: Armor_Slot) -> bool:
+    def equip_helmet(self, helmet: Helmet) -> Dialogue_Courier:
+        courier = Dialogue_Courier()
+        if helmet is None:
+            courier.message = Armor_Result.NO_ARMOR_SPECIFIED_EQUIP
+            courier.success_status = False
+
+        elif not isinstance(helmet, Helmet):
+            courier.message = Armor_Result.WRONG_ARMOR_TYPE
+            courier.success_status = False
+            courier.message_entity = helmet
+
+        elif self.head_slot and self.head_slot is helmet:
+            courier.message = Armor_Result.ALREADY_WEARING
+            courier.success_status = False
+            courier.message_entity = helmet
+        
+
+
+        return courier
+
+
+
+    def equip(self, item: Armor | Shield | None, armor_slot: Armor_Slot) -> Dialogue_Courier:
         """Attempt to equip an item in the requested slot and report success."""
         slot: str = slot_string(armor_slot)
-
-        if isinstance(item, (Armor, Shield)) and item.broken:
-            failure_message_auto()
-            return False
 
         match slot:
             case "head":
                 current = self.head_slot
                 if item is None:
-                    output(no_armor_specified_m(armor_slot))
-                    return False
+                    return Armor_Result.NO_ARMOR_SPECIFIED_EQUIP
                 if current is item:
-                    output(already_wearing_item_m(item))
-                    return True
+                    return Armor_Result.ALREADY_WEARING
                 if not isinstance(item, Helmet):
-                    output(wrong_armor_type_m(item, armor_slot))
-                    return False
+                    return Armor_Result.WRONG_ARMOR_TYPE
                 if current is not None:
-                    output(already_wearing_armor_m(item, current))
-                    return False
+                    return Armor_Result.ALREADY_WEARING
                 self.head_slot = item
                 output(successful_equip_m(item, armor_slot))
                 return self.head_slot is item
