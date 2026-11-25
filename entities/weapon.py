@@ -4,6 +4,7 @@ from . import Item
 from ..utils import roll_dice, BreakableItem
 from ..equipment import Material
 from math import floor
+from sys import maxsize
 
 
 class Weapon(Item, BreakableItem):
@@ -12,7 +13,7 @@ class Weapon(Item, BreakableItem):
     def __init__(self, name: str, damage: int, attack: int, value: int, durability: int, material: Material, two_handed: bool):
         """Set the weapon's name, damage, attack, and value."""
         super().__init__(" ".join([material.name, name]), floor(value * material.value_modifier))
-        BreakableItem.__init__(self, floor(durability * material.stat_mod))
+        BreakableItem.__init__(self, maxsize if durability == maxsize else floor(durability * material.stat_mod))
         self._material: Material = material
         self._damage: int = damage
         self._attack: int = attack
