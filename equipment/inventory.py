@@ -1,6 +1,7 @@
 """Track carried items, equipped gear, and coin transactions."""
 
-from . import ArmorStand, Armor, Weapon, Shield, BreakableArmor, BreakableShield, FISTS
+from ..entities import Armor, Weapon, Shield
+from .armor_stand import ArmorStand
 from ..dialogue import inventory_check_m
 from ..utils import output, Armor_Slot
 from ..debugging import success_message_auto, failure_message_auto, generic_message_auto

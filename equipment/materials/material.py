@@ -8,6 +8,13 @@ class Material:
     value_modifier: float
 
 @dataclass(frozen=True)
+class NoMaterial(Material):
+    name: str = ""
+    stat_mod: float = 1.0
+    block_chance: int = 0
+    value_modifier: float = 0.0
+
+@dataclass(frozen=True)
 class Wood(Material):
     name: str = "Wooden"
     stat_mod: float = 0.25
