@@ -4,4 +4,4 @@ from entity import Entity
 from armor import Armor
 from items import Item
 from shield import Shield
-from weapon import Weapon
+from weapon import Weapon, Blunt

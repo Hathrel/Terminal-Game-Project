@@ -2,5 +2,5 @@ from ..materials import Material
 from ...entities import Armor
 
 class Shoulders(Armor):
-    def __init__(self, name: str, material: Material):
-        super().__init__(name, 2, 4, 30, 20, material)
+    def __init__(self, name: str, material: Material, defense: int = 2, armor: int = 4, value: int = 30, durability: int = 20):
+        super().__init__(name, defense, armor, value, durability, material)
